@@ -6,7 +6,7 @@ import { createBrowserHistory } from 'history';
 import Header from './components/Header';
 import Progress from './components/Progress';
 
-const MarketingLazy = lazy(() => import ('./components/MarketingApp'));
+const ShopLazy = lazy(() => import ('./components/ShopApp'));
 const AuthLazy = lazy(() => import('./components/AuthApp'));
 const DashboardLazy = lazy(() => import('./components/DashboardApp'));
 
@@ -20,7 +20,7 @@ export default () => {
     const [isSignedIn, setIsSignedIn] = useState(false);
     useEffect(() => {
         if (isSignedIn) {
-            history.push('/dashboard');
+            history.push('/');
         }
     }, [isSignedIn])
     return (
@@ -33,13 +33,10 @@ export default () => {
                             <Route path="/auth">
                                 <AuthLazy onSignIn={() => setIsSignedIn(true)} />
                             </Route>
-                            <Route path="/dashboard">
-                                {
-                                    !isSignedIn && <Redirect to="/" />
-                                }
-                                <DashboardLazy />
+                            <Route path="/shop">
+                                <ShopLazy />
                             </Route>
-                            <Route path="/" component={MarketingLazy} />
+                            <Route path="/" component={DashboardLazy} />
                         </Switch>
                     </Suspense>
                 </div>

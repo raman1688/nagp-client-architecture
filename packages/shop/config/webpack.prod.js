@@ -7,14 +7,14 @@ const prodConfig = {
     mode: 'production',
     output: {
         filename: '[name].[contenthash].js', 
-        publicPath: '/marketing/latest/',
+        publicPath: '/shop/latest/',
     },
     plugins: [
         new ModuleFederationPlugin({
-            name: 'marketing',
+            name: 'shop',
             filename: 'remoteEntry.js',
             exposes: {
-                './MarketingApp': './src/bootstrap'
+                './ShopApp': './src/bootstrap'
             },
             shared: packageJSON.dependencies,
         })
