@@ -1,5 +1,4 @@
 const { merge } = require('webpack-merge');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
 const commonConfig = require('./webpack.common');
 const packageJson = require('../package.json');
@@ -14,10 +13,8 @@ const devConfig = {
     historyApiFallback: {
       index: 'index.html',
     },
-    header: {
-      'Access-Control-Allow-Origin': '*'
-    }
   },
+  devtool: "eval-source-map",
   plugins: [
     new ModuleFederationPlugin({
       name: 'dashboard',
@@ -26,9 +23,6 @@ const devConfig = {
         './DashboardApp': './src/bootstrap',
       },
       shared: packageJson.dependencies,
-    }),
-    new HtmlWebpackPlugin({
-      template: './public/index.html',
     }),
   ],
 };

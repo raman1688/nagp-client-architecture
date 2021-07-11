@@ -9,6 +9,7 @@ const devConfig = {
   output: {
     publicPath: 'http://localhost:8082/',
   },
+  devtool: "eval-source-map",
   devServer: {
     port: 8082,
     historyApiFallback: {

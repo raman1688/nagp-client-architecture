@@ -1,29 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { Link } from 'react-router-dom';
-
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" to="/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+import { auth, googleProvider, createUserProfileDocument } from '../firebase/firebase.utils';
 
 const useStyles = makeStyles((theme) => ({
   '@global': {
@@ -51,6 +36,36 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SignIn({ onSignIn }) {
+  const googleSignInStart = async () => {
+    try {
+      const {user} = await auth.signInWithPopup(googleProvider);
+      const userRef = await createUserProfileDocument(user);
+      const userSnapshot = await userRef.get();
+      const data = userSnapshot.data();
+      onSignIn(data);
+    } catch (error) {
+        console.log('error logging in..', error);
+    }
+  }
+  const [userCredentials, setUserCredentials] = useState({
+    email: '',
+    password: ''
+  });
+  const { email, password } = userCredentials;
+
+  const handleSubmit = async event => {
+    event.preventDefault();
+    const {user} = await auth.signInWithEmailAndPassword(email, password);
+    const userRef = await createUserProfileDocument(user);
+      const userSnapshot = await userRef.get();
+      const data = userSnapshot.data();
+      onSignIn(data);
+  };
+
+  const handleChange = event => {
+    const { value, name } = event.target;
+    setUserCredentials({...userCredentials, [name]: value });
+  };
   const classes = useStyles();
 
   return (
@@ -77,6 +92,8 @@ export default function SignIn({ onSignIn }) {
             name="email"
             autoComplete="email"
             autoFocus
+            onChange={handleChange}
+            value={email}
           />
           <TextField
             variant="outlined"
@@ -88,10 +105,8 @@ export default function SignIn({ onSignIn }) {
             type="password"
             id="password"
             autoComplete="current-password"
-          />
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
+            value={password}
+            onChange={handleChange}
           />
           <Button
             type="submit"
@@ -99,9 +114,18 @@ export default function SignIn({ onSignIn }) {
             variant="contained"
             color="primary"
             className={classes.submit}
-            onClick={onSignIn}
+            onClick={handleSubmit}
           >
             Sign In
+          </Button>
+          <Button
+            type='button'
+            color="primary" 
+            fullWidth
+            variant="contained"
+            onClick={googleSignInStart}
+          >
+            Sign in With Google
           </Button>
           <Grid container>
             <Grid item>
@@ -110,9 +134,6 @@ export default function SignIn({ onSignIn }) {
           </Grid>
         </form>
       </div>
-      <Box mt={8}>
-        <Copyright />
-      </Box>
     </Container>
   );
 }

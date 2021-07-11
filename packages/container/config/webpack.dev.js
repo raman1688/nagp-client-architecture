@@ -14,6 +14,7 @@ const devConfig = {
             index: 'index.html'
         }
     },
+    devtool: "eval-source-map",
     plugins: [
         new ModuleFederationPlugin({
             name: 'container',
