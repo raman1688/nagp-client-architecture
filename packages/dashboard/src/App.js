@@ -9,9 +9,9 @@ const generateClassName = createGenerateClassName({
 export default ({ history }) => {
   return (
     <div>
-      {/* <StylesProvider generateClassName={generateClassName}> */}
+      <StylesProvider generateClassName={generateClassName}>
         <Directory history={history} />
-      {/* </StylesProvider> */}
+      </StylesProvider>
     </div>
   );
 };

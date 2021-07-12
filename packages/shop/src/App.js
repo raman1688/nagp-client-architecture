@@ -11,7 +11,7 @@ const generateClassName = createGenerateClassName({
     productionPrefix: 'ma',
 });
 
-export default ({ history, cartMethods, cartItems }) => {
+export default ({ history }) => {
     const [collections, setCollections] = useState({});
     const [isLoading, setIsLoading] = useState(true);
     useEffect(async () => {
@@ -27,13 +27,13 @@ export default ({ history, cartMethods, cartItems }) => {
                 <Router history={history}>
                     <Switch>
                         <Route exact path="/shop/:collectionType">
-                            {isLoading ? <Progress /> : ((routeProps) => <Pricing cartItems={cartItems} cartMethods={cartMethods} collections={collections} {...routeProps} />)}
+                            {isLoading ? <Progress /> : ((routeProps) => <Pricing collections={collections} {...routeProps} />)}
                         </Route>
                         <Route path="/shop">
-                            {isLoading ? <Progress /> : <Landing cartItems={cartItems} cartMethods={cartMethods} collectionsMap={Object.keys(collections).map(key => collections[key])} />}
+                            {isLoading ? <Progress /> : <Landing collectionsMap={Object.keys(collections).map(key => collections[key])} />}
                         </Route>
                         <Route path="/">
-                            {isLoading ? <Progress /> : <Landing cartItems={cartItems} cartMethods={cartMethods} collectionsMap={Object.keys(collections).map(key => collections[key])} />}
+                            {isLoading ? <Progress /> : <Landing collectionsMap={Object.keys(collections).map(key => collections[key])} />}
                         </Route>
                     </Switch>
                 </Router>

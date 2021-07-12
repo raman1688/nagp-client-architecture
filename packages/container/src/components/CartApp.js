@@ -1,8 +1,8 @@
-import { mount } from 'shop/ShopApp';
+import { mount } from 'cart/CartApp';
 import React, { useRef, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 
-export default () => {
+export default ({ cartItems }) => {
     const ref = useRef(null);
     const history = useHistory();
 
@@ -16,6 +16,7 @@ export default () => {
           history.push(nextPathname);
         }
       },
+      cartItems,
     });
 
         history.listen(onParentNavigate);

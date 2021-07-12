@@ -9,6 +9,7 @@ import Progress from './components/Progress';
 const ShopLazy = lazy(() => import ('./components/ShopApp'));
 const AuthLazy = lazy(() => import('./components/AuthApp'));
 const DashboardLazy = lazy(() => import('./components/DashboardApp'));
+const CartLazy = lazy(() => import('./components/CartApp'));
 
 import { addItemToCart, removeItemFromCart, removeCartItem } from './utils/cart.utils';
 
@@ -28,7 +29,26 @@ export default () => {
         }
     }, [isSignedIn]);
 
-
+    useEffect(() => {
+        window.removeEventListener("AddItemToCart", function(event) {
+            addItem(event.detail);
+        }, false);
+        window.addEventListener("AddItemToCart", function(event) {
+            addItem(event.detail);
+        }, false);
+        window.removeEventListener("RemoveItemFromCart", function(event) {
+            removeItem(event.detail);
+        }, false);
+        window.addEventListener("RemoveItemFromCart", function(event) {
+            removeItem(event.detail);
+        }, false);
+        window.removeEventListener("RemoveCartItem", function(event) {
+            removeCartItem(event.detail);
+        }, false);
+        window.addEventListener("RemoveCartItem", function(event) {
+            removeCartItem(event.detail);
+        }, false);
+    });
 
     const addItem = (item) => {
         setCartItems(addItemToCart(cartItems, item));
@@ -41,10 +61,6 @@ export default () => {
         setCartItems(removeItemFromCart(cartItems, item));
     }
 
-    window.addEventListener("AddItemToCart", function(event) {
-        debugger;
-        addItem(event.detail);
-    }, false);
     return (
         <Router history={history}>
             <StylesProvider generateClassName={generateClassName}>
@@ -67,15 +83,9 @@ export default () => {
                                     }}
                                 />
                             </Route>
-                            <Route path="/shop">
-                                <ShopLazy
-                                    cartItems={cartItems}
-                                    cartMethods={{ 
-                                        addItem,
-                                        removeCartItem,
-                                        removeItem
-                                    }}
-                                />
+                            <Route path="/shop" component={ShopLazy} />
+                            <Route path="/cart">
+                                <CartLazy cartItems={cartItems} />
                             </Route>
                             <Route path="/" component={DashboardLazy} />
                         </Switch>

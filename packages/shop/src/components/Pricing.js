@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Pricing({ collections, match, cartMethods, cartItems }) {
+export default function Pricing({ collections, match }) {
   const classes = useStyles();
   const collection = collections[match.params.collectionType];
   const { title, items } = collection;

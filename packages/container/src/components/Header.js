@@ -82,7 +82,7 @@ export default function Header({ displayName, isSignedIn, onSignOut, cartItems }
             >
               Shop
             </Button>
-            <IconButton aria-label="shopping Cart" color="inherit">
+            <IconButton aria-label="shopping Cart" color="inherit" component={RouterLink} to={'/cart'}>
                 <Badge badgeContent={getCartItemsCount(cartItems)} color="secondary">
                   <AddShoppingCartIcon />
                 </Badge>
