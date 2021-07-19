@@ -51,18 +51,6 @@ const CheckoutItem = ({ cartItem }) => {
     const classes = useStyles();
     const {imageUrl, name, quantity, price, id} = cartItem;
     
-    const handleAddItemClick = () => {
-        const event = new CustomEvent("AddItemToCart", { detail: cartItem });
-        window.dispatchEvent(event);
-    }
-    const handleRemoveItemClick = () => {
-        const event = new CustomEvent("RemoveItemFromCart", { detail: cartItem });
-        window.dispatchEvent(event);
-    }
-    const handleRemoveCartItemClick = () => {
-        const event = new CustomEvent("RemoveCartItem", { detail: id });
-        window.dispatchEvent(event);
-    }
     return (
         <div className={classes.checkoutItem}>
             <div className={classes.imageContainer}>
@@ -70,16 +58,16 @@ const CheckoutItem = ({ cartItem }) => {
             </div>
             <span className={classes.name}>{name}</span>
             <span className={classes.quantity}>
-            <div className={classes.arrow} onClick={handleRemoveItemClick}>
+            <div className={classes.arrow}>
             &#10094;
             </div>
             <span className={classes.value}>{quantity}</span>
-            <div className={classes.arrow} onClick={handleAddItemClick}>
+            <div className={classes.arrow}>
             &#10095;
             </div>
         </span>
             <span className={classes.price}>{price}</span>
-            <div className={classes.removeButton} onClick={handleRemoveCartItemClick}>&#10005;</div>
+            <div className={classes.removeButton}>&#10005;</div>
         </div>
     );
 }

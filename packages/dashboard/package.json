@@ -10,7 +10,9 @@
     "@material-ui/icons": "^4.9.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
-    "react-router-dom": "^5.2.0"
+    "react-material-ui-carousel": "^2.2.7",
+    "react-router-dom": "^5.2.0",
+    "styled-components": "^4.3.2"
   },
   "devDependencies": {
     "@babel/core": "^7.12.3",

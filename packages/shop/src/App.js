@@ -3,8 +3,8 @@ import { Switch, Route, Router } from 'react-router-dom';
 import { StylesProvider, createGenerateClassName } from '@material-ui/core/styles';
 
 import { firestore, convertCollectionsSnapshotToMap } from './firebase/firebase.utils';
-import Landing from './components/Landing';
-import Pricing from './components/Pricing';
+import Landing from './components/pages/Landing';
+import Pricing from './components/pages/Pricing';
 import Progress from './components/Progress';
 
 const generateClassName = createGenerateClassName({
@@ -29,12 +29,12 @@ export default ({ history }) => {
                         <Route exact path="/shop/:collectionType">
                             {isLoading ? <Progress /> : ((routeProps) => <Pricing collections={collections} {...routeProps} />)}
                         </Route>
-                        <Route path="/shop">
-                            {isLoading ? <Progress /> : <Landing collectionsMap={Object.keys(collections).map(key => collections[key])} />}
+                        <Route exact path="/shop">
+                            {isLoading ? <Progress /> : ((routeProps) => <Landing collectionsMap={Object.keys(collections).map(key => collections[key])} {...routeProps} />)}
                         </Route>
-                        <Route path="/">
+                        {/* <Route path="/">
                             {isLoading ? <Progress /> : <Landing collectionsMap={Object.keys(collections).map(key => collections[key])} />}
-                        </Route>
+                        </Route> */}
                     </Switch>
                 </Router>
             </StylesProvider>

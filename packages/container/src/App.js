@@ -30,24 +30,26 @@ export default () => {
     }, [isSignedIn]);
 
     useEffect(() => {
-        window.removeEventListener("AddItemToCart", function(event) {
-            addItem(event.detail);
-        }, false);
         window.addEventListener("AddItemToCart", function(event) {
             addItem(event.detail);
         }, false);
-        window.removeEventListener("RemoveItemFromCart", function(event) {
-            removeItem(event.detail);
-        }, false);
-        window.addEventListener("RemoveItemFromCart", function(event) {
-            removeItem(event.detail);
-        }, false);
-        window.removeEventListener("RemoveCartItem", function(event) {
-            removeCartItem(event.detail);
-        }, false);
-        window.addEventListener("RemoveCartItem", function(event) {
-            removeCartItem(event.detail);
-        }, false);
+        // window.removeEventListener("RemoveItemFromCart", function(event) {
+        //     removeItem(event.detail);
+        // }, false);
+        // window.addEventListener("RemoveItemFromCart", function(event) {
+        //     removeItem(event.detail);
+        // }, false);
+        // window.removeEventListener("RemoveCartItem", function(event) {
+        //     removeCartItem(event.detail);
+        // }, false);
+        // window.addEventListener("RemoveCartItem", function(event) {
+        //     removeCartItem(event.detail);
+        // }, false);
+        return () => {
+            window.removeEventListener("AddItemToCart", function(event) {
+                addItem(event.detail);
+            }, false);
+        }
     });
 
     const addItem = (item) => {

@@ -2,7 +2,7 @@ import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import CollectionItem from './collection-item/collection-item.components.jsx';
+import CollectionItem from './../collection-item/collection-item.components.jsx';
 
 const useStyles = makeStyles((theme) => ({
   '@global': {
@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Pricing({ collections, match }) {
+const Pricing = ({ collections, match }) => {
   const classes = useStyles();
   const collection = collections[match.params.collectionType];
   const { title, items } = collection;
@@ -27,3 +27,5 @@ export default function Pricing({ collections, match }) {
     </div>
   );
 }
+
+export default Pricing;
