@@ -101,4 +101,3 @@ export default ({ cartItems }) => {
         </div>
     )
 }
-]
