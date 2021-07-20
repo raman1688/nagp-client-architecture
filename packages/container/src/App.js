@@ -30,9 +30,27 @@ export default () => {
     }, [isSignedIn]);
 
     useEffect(() => {
-        window.addEventListener("AddItemToCart", function(event) {
+        const handleAddItemEvent = (event) => {
+            event.stopPropagation();
             addItem(event.detail);
-        }, false);
+        }
+        const handleRemoveCartItemEvent = (event) => {
+            event.stopPropagation();
+            removeCartItem(event.detail);
+        }
+        const handleRemoveItemFromCartEvent = (event) => {
+            event.stopPropagation();
+            removeItem(event.detail);
+        }
+        window.addEventListener("AddItemToCart", handleAddItemEvent);
+        window.addEventListener("RemoveCartItem", handleRemoveCartItemEvent);
+        window.addEventListener("RemoveItemFromCart", handleRemoveItemFromCartEvent);
+        return () => {
+            window.removeEventListener("AddItemToCart", handleAddItemEvent);
+            window.removeEventListener("RemoveCartItem", handleRemoveCartItemEvent);
+            window.removeEventListener("RemoveItemFromCart", handleRemoveItemFromCartEvent);
+        }
+
         // window.removeEventListener("RemoveItemFromCart", function(event) {
         //     removeItem(event.detail);
         // }, false);
@@ -45,11 +63,6 @@ export default () => {
         // window.addEventListener("RemoveCartItem", function(event) {
         //     removeCartItem(event.detail);
         // }, false);
-        return () => {
-            window.removeEventListener("AddItemToCart", function(event) {
-                addItem(event.detail);
-            }, false);
-        }
     });
 
     const addItem = (item) => {

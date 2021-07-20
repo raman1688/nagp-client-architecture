@@ -3,6 +3,7 @@ import { StylesProvider, createGenerateClassName } from '@material-ui/core/style
 import { makeStyles } from '@material-ui/core/styles';
 import StripeCheckoutButton from './components/stripe-button/stripe-button.component.jsx';
 import CheckoutItem from './components/checkout-item/checkout-item.component.jsx';
+import { cartTotal } from './utils';
 
 const generateClassName = createGenerateClassName({
     productionPrefix: 'ca',
@@ -59,6 +60,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default ({ cartItems }) => {
     const classes = useStyles();
+    const total = cartTotal(cartItems);
     return (
         <div>
             <StylesProvider generateClassName={generateClassName}>
@@ -87,13 +89,13 @@ export default ({ cartItems }) => {
                         ))
                     }
                     
-                    <div className={classes.total}>TOTAL: 100</div>
+                    <div className={classes.total}>TOTAL: {total}</div>
                     <div className={classes.testWarning}>
                     *Please use the following test credit card for payments*
                     <br />
                     4242 4242 4242 4242 - Exp: 01/22 - CVV: 123
                     </div>
-                    <StripeCheckoutButton price={100} />
+                    <StripeCheckoutButton price={total} />
                 </div>
             </StylesProvider>
         </div>

@@ -20,6 +20,6 @@ export default ({ cartItems }) => {
     });
 
         history.listen(onParentNavigate);
-    }, []);
+    }, [cartItems]);
     return <div ref={ref} />;
 };

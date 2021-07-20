@@ -1,26 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { Link } from 'react-router-dom';
-
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link to="/">Your Website</Link> {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+import { auth } from './../firebase/firebase.utils';
 
 const useStyles = makeStyles((theme) => ({
   '@global': {
@@ -48,6 +36,35 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SignUp({ onSignIn }) {
+  const [userCredentials, setUserCredentials] = useState({
+    displayName: '',
+    email: '',
+    password: '',
+  });
+  const { displayName, email, password } = userCredentials;
+  const handleSubmit = async e => {
+    e.preventDefault();
+    try {
+      const { user } = await auth.createUserWithEmailAndPassword(email, password);
+      onSignIn({user, displayName });
+      // yield createUserProfileDocument(user, {displayName});
+      // yield put(
+      //     signUpSuccess({user, additionalData: { displayName }})
+      // )
+      // signUpStart({
+      //   email,
+      //   password,
+      //   displayName
+      // })
+    } catch (error) {
+        console.error(error);
+    }
+  }
+
+  const handleChange = event => {
+    const { name, value } = event.target;
+    setUserCredentials({...userCredentials, [name]: value });
+  }
   const classes = useStyles();
 
   return (
@@ -60,7 +77,7 @@ export default function SignUp({ onSignIn }) {
           Sign up
         </Typography>
         <form
-          onSubmit={(e) => e.preventDefault()}
+          onSubmit={handleSubmit}
           className={classes.form}
           noValidate
         >
@@ -68,27 +85,18 @@ export default function SignUp({ onSignIn }) {
             <Grid item xs={12} sm={6}>
               <TextField
                 autoComplete="fname"
-                name="firstName"
+                name="displayName"
+                value={displayName}
                 variant="outlined"
                 required
                 fullWidth
-                id="firstName"
-                label="First Name"
+                id="displayName"
+                label="Display Name"
                 autoFocus
+                onChange={handleChange}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="lastName"
-                label="Last Name"
-                name="lastName"
-                autoComplete="lname"
-              />
-            </Grid>
-            <Grid item xs={12}>
               <TextField
                 variant="outlined"
                 required
@@ -97,6 +105,8 @@ export default function SignUp({ onSignIn }) {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
+                value={email}
+                onChange={handleChange}
               />
             </Grid>
             <Grid item xs={12}>
@@ -109,12 +119,8 @@ export default function SignUp({ onSignIn }) {
                 type="password"
                 id="password"
                 autoComplete="current-password"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <FormControlLabel
-                control={<Checkbox value="allowExtraEmails" color="primary" />}
-                label="I want to receive inspiration, marketing promotions and updates via email."
+                value={password}
+                onChange={handleChange}
               />
             </Grid>
           </Grid>
@@ -124,7 +130,6 @@ export default function SignUp({ onSignIn }) {
             variant="contained"
             color="primary"
             className={classes.submit}
-            onClick={onSignIn}
           >
             Sign Up
           </Button>
@@ -135,9 +140,6 @@ export default function SignUp({ onSignIn }) {
           </Grid>
         </form>
       </div>
-      <Box mt={5}>
-        <Copyright />
-      </Box>
     </Container>
   );
 }
