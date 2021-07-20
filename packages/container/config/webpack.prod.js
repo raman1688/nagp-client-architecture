@@ -17,7 +17,8 @@ const prodConfig = {
             remotes: {
                 shop: `shop@${domain}/shop/latest/remoteEntry.js`,
                 auth: `auth@${domain}/auth/latest/remoteEntry.js`,
-                dashboard: `dashboard@${domain}/dashboard/latest/remoteEntry.js`
+                dashboard: `dashboard@${domain}/dashboard/latest/remoteEntry.js`,
+                cart: `cart@${domain}/cart/latest/remoteEntry.js`
             },
             shared: packageJSON.dependencies
         })

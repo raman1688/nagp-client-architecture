@@ -1,5 +1,5 @@
 import React, { lazy, Suspense, useState, useEffect } from 'react';
-import { Router, Route, Switch, Redirect } from 'react-router-dom';
+import { Router, Route, Switch } from 'react-router-dom';
 import { StylesProvider, createGenerateClassName } from '@material-ui/core/styles';
 import { createBrowserHistory } from 'history';
 
@@ -11,7 +11,7 @@ const AuthLazy = lazy(() => import('./components/AuthApp'));
 const DashboardLazy = lazy(() => import('./components/DashboardApp'));
 const CartLazy = lazy(() => import('./components/CartApp'));
 
-import { addItemToCart, removeItemFromCart, removeCartItem } from './utils/cart.utils';
+import { addItemToCart, removeItemFromCart } from './utils/cart.utils';
 
 const generateClassName = createGenerateClassName({
     productionPrefix: 'co',
@@ -50,19 +50,6 @@ export default () => {
             window.removeEventListener("RemoveCartItem", handleRemoveCartItemEvent);
             window.removeEventListener("RemoveItemFromCart", handleRemoveItemFromCartEvent);
         }
-
-        // window.removeEventListener("RemoveItemFromCart", function(event) {
-        //     removeItem(event.detail);
-        // }, false);
-        // window.addEventListener("RemoveItemFromCart", function(event) {
-        //     removeItem(event.detail);
-        // }, false);
-        // window.removeEventListener("RemoveCartItem", function(event) {
-        //     removeCartItem(event.detail);
-        // }, false);
-        // window.addEventListener("RemoveCartItem", function(event) {
-        //     removeCartItem(event.detail);
-        // }, false);
     });
 
     const addItem = (item) => {
