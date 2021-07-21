@@ -3,8 +3,8 @@ import { Switch, Route, Router } from 'react-router-dom';
 import { StylesProvider, createGenerateClassName } from '@material-ui/core/styles';
 
 import { firestore, convertCollectionsSnapshotToMap } from './firebase/firebase.utils';
-import Landing from './components/pages/Landing';
-import Pricing from './components/pages/Pricing';
+import ShopCollections from './components/pages/shop.collections.page';
+import ShopCategory from './components/pages/shop.category.page';
 import Progress from './components/Progress';
 
 const generateClassName = createGenerateClassName({
@@ -27,10 +27,10 @@ export default ({ history }) => {
                 <Router history={history}>
                     <Switch>
                         <Route exact path="/shop/:collectionType">
-                            {isLoading ? <Progress /> : ((routeProps) => <Pricing collections={collections} {...routeProps} />)}
+                            {isLoading ? <Progress /> : ((routeProps) => <ShopCategory collections={collections} {...routeProps} />)}
                         </Route>
                         <Route exact path="/shop">
-                            {isLoading ? <Progress /> : ((routeProps) => <Landing collectionsMap={Object.keys(collections).map(key => collections[key])} {...routeProps} />)}
+                            {isLoading ? <Progress /> : ((routeProps) => <ShopCollections collectionsMap={Object.keys(collections).map(key => collections[key])} {...routeProps} />)}
                         </Route>
                         {/* <Route path="/">
                             {isLoading ? <Progress /> : <Landing collectionsMap={Object.keys(collections).map(key => collections[key])} />}
