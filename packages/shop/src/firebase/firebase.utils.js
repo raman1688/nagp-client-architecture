@@ -4,7 +4,7 @@ import 'firebase/firestore';
 
 // Your web app's Firebase configuration
 var firebaseConfig = {
-    apiKey: process.env.FIREBASE_API_KEY,
+    apiKey: "AIzaSyBnfWkOuWkXzy7cT-c6bWbQcha-QjRzLbU",
     authDomain: "raman-fashion.firebaseapp.com",
     databaseURL: "https://raman-fashion.firebaseio.com",
     projectId: "raman-fashion",
