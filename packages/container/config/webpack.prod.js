@@ -4,7 +4,7 @@ const commonConfig = require('./webpack.common');
 const packageJSON = require('../package.json');
 
 // const domain = process.env.PRODUCTION_DOMAIN;
-const domain = 'd2i0cep6siore0.cloudfront.net';
+const domain = 'https://d2i0cep6siore0.cloudfront.net';
 
 const prodConfig = {
     mode: 'production',
